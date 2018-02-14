@@ -1,0 +1,14 @@
+{
+"NAME": "SmortReact",
+"AUTHOR": "Skyyrunner",
+"SHORT": "Create automatic reactions when trigger words are typed in chat",
+"DESCRIPTION": "Create automatic reactions when trigger words are typed in chat. Can adjust react probability.\n\nDependencies: None",
+"INSTALL_MSG": "Thanks for installing SmortReact.",
+"REQUIREMENTS": [],
+"TAGS": [
+"reaction",
+"smart",
+"auto"
+],
+"DISABLED": false
+}
