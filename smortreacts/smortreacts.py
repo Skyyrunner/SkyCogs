@@ -13,7 +13,7 @@ class SmartReact:
         self.bot = bot
         self.settings_path = "data/smortreacts/settings.json"
         self.settings = dataIO.load_json(self.settings_path)
-        self.NONWORDS = set(" ~!@#$%^&*()_=+`'\"/.,;:\\|[]\{\}<>")
+        self.NONWORDS = set(" ~!@#$%^&*()_?=+`'\"/.,;:\\|[]\{\}<>")
 
     # [p]addreact word(s) emoji [chance=0.1]
     @commands.command(name="addreact", no_pm=True, pass_context=True)
