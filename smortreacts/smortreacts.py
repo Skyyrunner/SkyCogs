@@ -115,7 +115,6 @@ class SmartReact:
         if server.id not in self.settings:
             return
         react_dict = copy.deepcopy(self.settings[server.id])
-        words = message.content.lower().split()
         for emoji in react_dict:
             triggers = react_dict[emoji]
             for trigger, chance in triggers.items():
@@ -129,7 +128,6 @@ class SmartReact:
     # such as $, ^, a non-alphanumeric, etc
     def is_word_boundary(self, string, trigger):
         i = string.find(trigger)
-        print(i, string, trigger)
         if i == -1:
             return False
         if 0 < i:
