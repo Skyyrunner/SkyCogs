@@ -23,37 +23,20 @@ class SmartReact:
         message = ctx.message
         self.load_settings(server.id)
 
-        trigger = None
-        chance = 0.1
-        emoji = None
-        L = len(command)
-        if L == 2:
-            trigger = command[0]
-            emoji = command[1]
-        elif 3 <= L:
-            # Two legal possibilities
-            # (1) word1 [word2 ...] emoji
-            # (2) word1 [word2 ...] emoji chance
-            try:
-                # case (2)
-                chance = float(command[-1])
-                trigger = " ".join(command[0:-2])
-                emoji = command[-2]
-            except ValueError:
-                # case (1)
-                trigger = " ".join(command[0:-1])
-                emoji = command[-1]
+        trigger, emoji, chance = parse_command(command, dodelete=False)
         emoji = self.fix_custom_emoji(emoji)
         await self.create_smart_reaction(server, trigger, emoji, message, chance)
 
     @commands.command(name="delreact", no_pm=True, pass_context=True)
-    async def delreact(self, ctx, word, emoji):
+    async def delreact(self, ctx, *command):
         """Delete an auto reaction to a word"""
         server = ctx.message.server
         message = ctx.message
         self.load_settings(server.id)
+
+        trigger, emoji, chance = parse_command(command, dodelete=True)
         emoji = self.fix_custom_emoji(emoji)
-        await self.remove_smart_reaction(server, word, emoji, message)
+        await self.remove_smart_reaction(server, trigger, emoji, message)
 
     def load_settings(self, server_id):
         self.settings = dataIO.load_json(self.settings_path)
@@ -163,6 +146,34 @@ class SmartReact:
             if c not in self.NONWORDS:
                 return False
         return True
+
+def parse_command(command, dodelete=None):
+    trigger = None
+    chance = 0.1
+    emoji = None
+    L = len(command)
+    if dodelete:
+        trigger = " ".join(command[0:-1])
+        emoji = command[-1]
+    else:
+        if L == 2:
+            trigger = command[0]
+            emoji = command[1]
+        elif 3 <= L:
+            # Two legal possibilities
+            # (1) word1 [word2 ...] emoji
+            # (2) word1 [word2 ...] emoji chance
+            try:
+                # case (2)
+                chance = float(command[-1])
+                trigger = " ".join(command[0:-2])
+                emoji = command[-2]
+            except ValueError:
+                # case (1)
+                trigger = " ".join(command[0:-1])
+                emoji = command[-1]
+    return trigger, emoji, chance
+
 
 def check_folders():
     folder = "data/smortreacts"
