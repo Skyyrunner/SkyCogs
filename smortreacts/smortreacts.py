@@ -11,7 +11,7 @@ class SmartReact:
 
     def __init__(self, bot):
         self.bot = bot
-        self.settings_path = "data/smortreact/settings.json"
+        self.settings_path = "data/smortreacts/settings.json"
         self.settings = dataIO.load_json(self.settings_path)
         self.NONWORDS = set(" ~!@#$%^&*()_=+`'\"/.,;:\\|[]\{\}<>")
 
@@ -145,7 +145,7 @@ class SmartReact:
         return True
 
 def check_folders():
-    folder = "data/smortreact"
+    folder = "data/smortreacts"
     if not os.path.exists(folder):
         print("Creating {} folder...".format(folder))
         os.makedirs(folder)
@@ -153,9 +153,9 @@ def check_folders():
 
 def check_files():
     default = {}
-    if not dataIO.is_valid_json("data/smortreact/settings.json"):
-        print("Creating default smortreact settings.json...")
-        dataIO.save_json("data/smortreact/settings.json", default)
+    if not dataIO.is_valid_json("data/smortreacts/settings.json"):
+        print("Creating default smortreacts settings.json...")
+        dataIO.save_json("data/smortreacts/settings.json", default)
 
 
 def setup(bot):
